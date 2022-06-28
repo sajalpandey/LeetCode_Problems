@@ -2,9 +2,9 @@ class Solution {
 public:
     int maxArea(vector<int>& height) {
         int maxArea = 0;
-        int i=0, j=height.size()-1;
+        int i=0, j=height.size()-1,tempArea;
         while(i<j){
-            int tempArea = min(height[i],height[j]) * abs(i-j);
+            tempArea = min(height[i],height[j]) * (j-i);
             if(tempArea > maxArea)
                 maxArea = tempArea;
             if(height[i]<height[j])
