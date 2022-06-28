@@ -8,8 +8,8 @@ public:
             prod*=nums[i];
         }
         prod=1;
-        for(int i=0;i<nums.size();i++){
-            res[i] = res[i] * prod;
+        for(int i=0;i<n;++i){
+            res[i] *= prod;
             prod *= nums[i];
         }
         return res;
