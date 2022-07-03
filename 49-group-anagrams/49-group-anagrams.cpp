@@ -8,17 +8,18 @@ public:
         4. based on that unique index append to the result vector
         5. return the result vector
         */
-        vector<vector<string>> result(10000);
-        unordered_map<string, int> ump;
-        int counter = 1;
-        for(auto str : strs){
-            string temp = str;
+        vector<vector<string>> result;
+        unordered_map<string, vector<string>> ump;
+        string temp = "";
+        for(auto & str : strs){
+            temp = str;
             sort(str.begin(),str.end());
-            if(ump.find(str)==ump.end())
-                ump[str] = counter++;
-            result[ump[str]-1].emplace_back(temp);  
+            ump[str].emplace_back(temp);
         }
-        result.resize(counter-1);
+        
+        for(auto & value : ump)
+            result.emplace_back(value.second);
+        
         return result;
     }
 };
