@@ -3,11 +3,11 @@ public:
     string convert(string s, int numRows) {
         if(numRows==1 || numRows>=size(s))
             return s;
-        vector<pair<int ,int>> vp;
+        vector<string> vp(numRows+1,"");
         string result = "";
         int n = 1, flag=0;
         for(int i=0; i<size(s); ++i){
-            vp.push_back({n,i});
+            vp[n] += s[i];
             if(flag == 0)
                 n++;
             else
@@ -17,9 +17,9 @@ public:
             } else if(n<=1)
                 flag =0;
         }
-        sort(vp.begin(),vp.end());
-        for(auto & ele :vp)
-            result += s[ele.second];
+       
+        for(int i=1 ;i<=numRows; i++)
+            result += vp[i];
         return result;
     }
 };
