@@ -7,7 +7,7 @@ public:
         string result = "";
         int n = 1, flag=0;
         for(int i=0; i<size(s); ++i){
-            vp.emplace_back(n,i);
+            vp.push_back({n,i});
             if(flag == 0)
                 n++;
             else
