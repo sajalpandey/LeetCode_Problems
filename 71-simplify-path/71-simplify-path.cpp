@@ -7,6 +7,8 @@ public:
             temp= "";
             while(i<size(path) && path[i]!= '/')
                 temp += path[i++];
+            if(temp == ".")
+                continue;
             if(temp == ".."){
                 if(!st.empty())
                     st.pop();
