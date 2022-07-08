@@ -1,61 +1,58 @@
 class Solution {
 public:
-    void justify(string &text, int n)
+    string static makeJustifyLine(vector<string>& words, int start, int end, int len, int maxLen)
     {
-        int spaces = n - size(text);
-        int r = spaces;
-        //cout<<spaces<<endl;
-        while(1){
-            for(int i=0; i<size(text); ++i){
-                if(text[i] == ' '){
-                    while(i<size(text) && text[i]==' ')
-                        i++;
-                    text.insert(i-1," ");
-                    spaces --;
-                    
-                }
-                if(spaces == 0)
-                    return;
-            }
-            //cout<<"spaces: "<<spaces<<endl;
-            if(spaces == r){
-                while(spaces){
-                    text.insert(size(text)," ");
-                    spaces--;
-                }
-                if(spaces == 0)
-                    return;
-            }
+        string ans = "";
+        int spacesToAppend = 1;
+        int extraSpaces = 0;
+        if(start!=end)
+        {
+            spacesToAppend = (maxLen - len) /(end - start);
+            extraSpaces = (maxLen - len)% (end - start);
         }
+        
+        for (int i = start; i<=end; i++)
+        {
+            ans += words[i];
+            if(i!=end)
+            {
+                if(end == size(words) -1)
+                    ans += " ";
+                else
+                {
+                    for(int j=1; j<=spacesToAppend; j++)
+                        ans += " ";
+                    if(extraSpaces)
+                    {
+                        ans += " ";
+                        extraSpaces--;
+                    }
+                }
+            }
+            
+        }
+        
+        while(size(ans)<maxLen)
+            ans += " ";
+        return ans;
     }
     vector<string> fullJustify(vector<string>& words, int maxWidth) {
         vector<string> result;
-        string temp = "";
-        for(auto & word : words){
-            if(temp == "")
-                temp += word;
-            else{
-                if((size(temp)+size(word)+1)<=maxWidth){
-                    temp += " ";
-                    temp += word;
-                }else{
-                    
-                    justify(temp,maxWidth);
-                   
-                    result.emplace_back(temp);
-                    temp = "";
-                    temp += word;
-                }
+        int word = 0, j, charSoFar;
+        while(word<size(words))
+        {
+            j = word -1;
+            charSoFar = 0;
+            while(j+1<size(words) && charSoFar + size(words[j+1]) + (j-word+1) <= maxWidth)
+            {
+                charSoFar += size(words[j+1]);
+                j++;
             }
+            result.emplace_back(makeJustifyLine(words, word, j, charSoFar, maxWidth));
+            
+            word = j+1;
+            
         }
-        if(size(temp)+1<=maxWidth){
-            int spaces = maxWidth - size(temp);
-            while(spaces){
-                temp.insert(size(temp)," ");
-                spaces--;
-            }
-        }
-        result.emplace_back(temp);
         return result;
     }
 };
