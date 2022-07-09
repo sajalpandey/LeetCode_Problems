@@ -11,19 +11,19 @@ public:
         {
             if(dir == 0){
                 if(j == col - 1)
-                    i++ , dir = 1;
+                    ++i , dir = 1;
                 else if (i == 0)
-                    j++, dir = 1;
+                    ++j, dir = 1;
                 else
-                    i-- , j++;
+                    --i , ++j;
             }
             else{
                 if(i == row -1)
-                    j++, dir = 0;
+                    ++j, dir = 0;
                 else if (j == 0)
-                    i++ , dir = 0;
+                    ++i , dir = 0;
                 else
-                    i++ , j--;
+                    ++i , --j;
             }
             
             result[count++] = mat[i][j];
