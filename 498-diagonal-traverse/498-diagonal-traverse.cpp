@@ -2,11 +2,11 @@ class Solution {
 public:
     vector<int> findDiagonalOrder(vector<vector<int>>& mat) {
         int row =  mat.size(), col = mat[0].size();
-        vector<int> result ;
+        vector<int> result(row * col);
         int dir = 0;
-        result.emplace_back(mat[0][0]);
+        result[0] = mat [0][0];
         
-        int i = 0, j = 0;
+        int i = 0, j = 0, count = 1 ;
         while(i != row-1 || j != col -1)
         {
             if(dir == 0){
@@ -26,7 +26,7 @@ public:
                     i++ , j--;
             }
             
-            result.emplace_back(mat[i][j]);
+            result[count++] = mat[i][j];
         }
         return result;
     }
