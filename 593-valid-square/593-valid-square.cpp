@@ -4,7 +4,7 @@ public:
         return ((x[0] - y[0]) * (x[0] - y[0]) + (x[1] - y[1]) * (x[1] - y[1]));
     }
     bool validSquare(vector<int>& p1, vector<int>& p2, vector<int>& p3, vector<int>& p4) {
-        set<int> ump;
+        unordered_set<int> ump;
         ump.insert(distance(p1 , p2));
         ump.insert(distance(p1 , p3));
         ump.insert(distance(p1 , p4));
