@@ -17,9 +17,12 @@ public:
         return true;
     }
     int shipWithinDays(vector<int>& weights, int days) {
-        int start = 0, end = 0, mid, ans = -1;
-        for(auto &ele : weights)
+        int start = INT_MAX, end = 0, mid, ans = -1;
+        for(auto &ele : weights){
             end += ele;
+            if(ele < start)
+                start = ele;
+        }
         
         while(start <= end){
             mid = start + (end - start)/2;
