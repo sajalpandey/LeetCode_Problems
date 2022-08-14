@@ -1,20 +1,21 @@
 class Solution {
 public:
-    vector<vector<int>> generateSubsets(int i, vector<int>& nums){
-        if(i >= nums.size())
-            return {{}};
-        vector<vector<int>> partial = generateSubsets(i+1, nums);
-        vector<vector<int>> ans;
-        for(auto &v: partial)
-            ans.push_back(v);
-        for(auto &v: partial){
-            v.insert(v.begin(),nums[i]);
-            ans.push_back(v);
+    void generateSubsets(int i, vector<int>& nums, vector<int> &subset, vector<vector<int>> &ans){
+        if(i >= nums.size()){
+            ans.push_back(subset);
+            return;
         }
+        subset.emplace_back(nums[i]);
+        generateSubsets(i+1, nums, subset, ans);
         
-        return ans;
+        subset.pop_back();
+        generateSubsets(i+1, nums, subset, ans);
+        
     }
     vector<vector<int>> subsets(vector<int>& nums) {
-        return generateSubsets(0, nums);
+        vector<vector<int>> ans;
+        vector<int> subset;
+        generateSubsets(0, nums, subset, ans);
+        return ans;
     }
 };
