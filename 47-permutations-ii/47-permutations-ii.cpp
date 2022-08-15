@@ -17,7 +17,7 @@ public:
         vector<vector<int>> ans;
         generatePermutations(0, nums, s);
         for(auto &vec: s)
-            ans.push_back(vec);
+            ans.emplace_back(vec);
         return ans;
     }
 };
