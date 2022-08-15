@@ -1,21 +1,19 @@
 class Solution {
 public:
-    void generateSubsets(int i, vector<int>& nums, vector<int> &subset, vector<vector<int>> &ans){
-        if(i >= nums.size()){
-            ans.push_back(subset);
-            return;
-        }
-        subset.emplace_back(nums[i]);
-        generateSubsets(i+1, nums, subset, ans);
-        
-        subset.pop_back();
-        generateSubsets(i+1, nums, subset, ans);
-        
-    }
     vector<vector<int>> subsets(vector<int>& nums) {
         vector<vector<int>> ans;
         vector<int> subset;
-        generateSubsets(0, nums, subset, ans);
+        int numbers = pow(2, size(nums));
+        for(int i = 0; i < numbers; i++){
+            subset.clear();
+            
+            for(int j = 0; j < nums.size(); j++){
+                if(i & 1<<j){
+                    subset.emplace_back(nums[j]);
+                }
+            }
+            ans.emplace_back(subset);
+        }
         return ans;
     }
 };
