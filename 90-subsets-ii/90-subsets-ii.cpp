@@ -5,7 +5,7 @@ public:
             ans.push_back(subset);
             return;
         }
-        subset.emplace_back(nums[i]);
+        subset.push_back(nums[i]);
         generateSubset(nums, i+1, ans, subset);
         subset.pop_back();
         while(i+1 < nums.size() && nums[i] == nums[i+1]) i++;
