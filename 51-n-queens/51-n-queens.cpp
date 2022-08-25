@@ -1,28 +1,6 @@
 class Solution {
 public:
-    bool safePlace(int i, int j, vector<vector<char>> &board, int n){
-        int corX = i;
-        while(corX >= 0){
-            if(board[corX][j] == 'Q')
-                return false;
-            corX--;
-        }
-        corX = i;
-        int corY = j;
-        while(corX>=0 && corY>=0){
-            if(board[corX][corY] == 'Q')
-                return false;
-            corX--; corY--;
-        }
-        corX=i, corY=j;
-        while(corX >= 0 && corY < n){
-            if(board[corX][corY] == 'Q')
-                return false;
-            corX--;corY++;
-        }
-        return true;
-    }
-    void placeQueens(int i, vector<vector<string>> &ans, int n, vector<vector<char>> &board)
+    void placeQueens(int i, vector<vector<string>> &ans, int n, vector<vector<char>> &board,vector<char>&up,vector<char>&leftDig, vector<char>& ritDig)
     {   
         if(i >= n){
             vector<string> res;
@@ -36,10 +14,12 @@ public:
             return ;
         }
         for(int j=0; j<n; j++){
-            if(safePlace(i, j, board, n)){
+            if(up[j] == '.' && leftDig[i-j+n-1] == '.' && ritDig[i+j] == '.'){
                 board[i][j] = 'Q';
-                placeQueens(i+1, ans, n, board);
+                up[j] = '#', leftDig[i-j+n-1] = '#', ritDig[i+j] = '#';
+                placeQueens(i+1, ans, n, board, up, leftDig, ritDig);
                 board[i][j] = '.';
+                up[j] = '.', leftDig[i-j+n-1] = '.', ritDig[i+j] = '.';
             }
             
         }
@@ -47,7 +27,8 @@ public:
     vector<vector<string>> solveNQueens(int n) {
         vector<vector<string>> ans;
         vector<vector<char>> board(n, vector<char>(n, '.'));
-        placeQueens(0, ans, n, board);
+        vector<char> up(n,'.') , leftDig(2*n,'.'), ritDig(2*n,'.');
+        placeQueens(0, ans, n, board, up, leftDig, ritDig);
         return ans;
     }
 };
