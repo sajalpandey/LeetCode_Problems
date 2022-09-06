@@ -10,18 +10,37 @@
  */
 class Solution {
 public:
+    ListNode * reverse(ListNode *head){
+        ListNode *curr = head, *prev = NULL, *nxt = NULL;
+        while(curr){
+            nxt = curr -> next;
+            curr -> next = prev;
+            prev = curr;
+            curr = nxt;
+        }
+        return prev;
+    }
     bool isPalindrome(ListNode* head) {
-        string str = "";
-        ListNode *itr = head;
-        while(itr){
-            str += to_string(itr->val);
-            itr = itr -> next;
+        ListNode *slow = head , *fast = head;
+        while(fast && fast -> next){
+            slow = slow -> next;
+            fast = fast -> next -> next;
         }
         
-        string reverseString = str;
-        reverse(str.begin(), str.end());
-        if(str == reverseString)
-            return true;
-        return false;
+        ListNode *reversedHead = NULL;
+        if(fast == NULL)
+            reversedHead = reverse(slow);
+        else
+            reversedHead = reverse(slow -> next);
+        
+        fast = head;
+        while(fast && reversedHead){
+            if(fast->val != reversedHead->val)
+                return false;
+            fast = fast -> next;
+            reversedHead = reversedHead -> next;
+        }
+        
+        return true;
     }
 };
