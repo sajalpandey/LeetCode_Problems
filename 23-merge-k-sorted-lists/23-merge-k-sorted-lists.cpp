@@ -29,7 +29,7 @@ public:
             minH.pop();
             tail -> next = minNode;
             tail = tail -> next;
-            if(minNode!=NULL && minNode -> next != NULL)
+            if(minNode -> next != NULL)
                 minH.push(minNode -> next);
         }
         return dummy -> next;
