@@ -10,33 +10,28 @@
  */
 class Solution {
 public:
-    ListNode * merge(ListNode *head1, ListNode *head2){
-        ListNode *newHead = new ListNode(-1);
-        ListNode *ptr = NULL;
-        ptr = newHead;
-        while(head1 && head2){
-            if(head1 -> val <= head2 -> val){
-                ptr -> next = head1;
-                head1 = head1 -> next;
-            }else{
-                ptr -> next = head2;
-                head2 = head2 -> next;
-            }
-            ptr = ptr -> next;
+    struct cmp{
+        bool operator()(ListNode *a, ListNode *b){
+            return a->val > b->val;
         }
-        
-        if(head2)
-                ptr -> next = head2;
-        if(head1)
-                ptr -> next = head1;
-        
-        return newHead -> next;
-    }
+    };
     ListNode* mergeKLists(vector<ListNode*>& lists) {
-        ListNode *mergedList = NULL;
-        for(int i = 0; i < lists.size(); i++){
-            mergedList = merge(mergedList, lists[i]);
+        //make a min heap
+        priority_queue<ListNode*, vector<ListNode*>,cmp> minH;
+        //create a dummy node
+        ListNode *dummy = new ListNode(-1);
+        ListNode *tail = dummy;
+        for(auto &m: lists)
+            if(m!=NULL)
+                minH.push(m);
+        while(minH.size()>0){
+            ListNode *minNode = minH.top();
+            minH.pop();
+            tail -> next = minNode;
+            tail = tail -> next;
+            if(minNode!=NULL && minNode -> next != NULL)
+                minH.push(minNode -> next);
         }
-        return mergedList;
+        return dummy -> next;
     }
 };
