@@ -14,48 +14,15 @@ public:
         ListNode * dummy = new ListNode(-1);
         ListNode * curr = dummy;
         int carry = 0, sum;
-        while(l1 && l2){
-            sum = l1 -> val + l2 -> val + carry;
-            if(sum > 9){
-                sum = sum % 10;
-                carry = 1;
-            }
-            else{
-                carry = 0;
-            }
+        while(l1 || l2){
+            sum = (l1 ? l1->val : 0) + (l2 ? l2->val : 0) + carry;
+            carry = sum/10;
+            sum = sum % 10;
             ListNode * newNode = new ListNode(sum);
             curr -> next = newNode;
             curr = curr -> next;
-            l1 = l1 -> next;
-            l2 = l2 -> next;
-        }
-        while(l1){
-            sum = l1 -> val + carry;
-            if(sum > 9){
-                sum = sum % 10;
-                carry = 1;
-            }
-            else{
-                carry = 0;
-            }
-            ListNode * newNode = new ListNode(sum);
-            curr -> next = newNode;
-            curr = curr -> next;
-            l1 = l1 -> next;
-        }
-        while(l2){
-            sum = l2 -> val + carry;
-            if(sum > 9){
-                sum = sum % 10;
-                carry = 1;
-            }
-            else{
-                carry = 0;
-            }
-            ListNode * newNode = new ListNode(sum);
-            curr -> next = newNode;
-            curr = curr -> next;
-            l2 = l2 -> next;
+            l1 = l1 ? l1->next : NULL;
+            l2 = l2 ? l2->next : NULL;
         }
         if(carry){
             ListNode * newNode = new ListNode(carry);
