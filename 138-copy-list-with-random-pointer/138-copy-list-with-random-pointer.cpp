@@ -19,17 +19,28 @@ public:
     Node* copyRandomList(Node* head) {
         map<Node *, Node *> mp;
         Node * curr = head;
+        //added newly created duplicate nodes in between ll
         while(curr){
             Node *newNode = new Node(curr->val);
-            mp[curr] = newNode;
-            curr = curr -> next;
+            newNode -> next = curr -> next;
+            curr -> next = newNode;
+            curr = newNode -> next;
         }
+        //now correct random nodes
         curr = head;
         while(curr){
-            mp[curr] -> next = mp[curr->next];
-            mp[curr] -> random = mp[curr -> random];
+            curr -> next -> random = (curr->random ? curr -> random -> next : NULL);
+            curr = curr -> next -> next;
+        }
+        //correct the linked list
+        Node *dummy = new Node(-1);
+        Node * itr = dummy;curr = head;
+        while(curr){
+            itr->next = curr->next;
+            itr = itr -> next;
+            curr -> next = itr -> next;
             curr = curr -> next;
         }
-        return mp[head];
+        return dummy -> next;
     }
 };
